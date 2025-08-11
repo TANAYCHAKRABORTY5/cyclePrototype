@@ -1,19 +1,19 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Card, CardContent, Typography, Stack, Box } from "@mui/material";
 
-type Props = {
+interface DashboardCardProps {
   title?: string;
   subtitle?: string;
-  action?: React.ReactNode | any;
-  footer?: React.ReactNode;
-  cardheading?: string | React.ReactNode;
-  headtitle?: string | React.ReactNode;
-  headsubtitle?: string | React.ReactNode;
-  children?: React.ReactNode;
-  middlecontent?: string | React.ReactNode;
-};
+  action?: ReactNode;
+  footer?: ReactNode;
+  cardheading?: boolean; // This was previously string | ReactNode but you seem to use it as a flag
+  headtitle?: string | ReactNode;
+  headsubtitle?: string | ReactNode;
+  children?: ReactNode;
+  middlecontent?: string | ReactNode;
+}
 
-const DashboardCard = ({
+const DashboardCard: React.FC<DashboardCardProps> = ({
   title,
   subtitle,
   children,
@@ -23,41 +23,39 @@ const DashboardCard = ({
   headtitle,
   headsubtitle,
   middlecontent,
-}: Props) => {
+}) => {
   return (
-    <Card sx={{ padding: 0 }} elevation={9} variant={undefined}>
+    <Card sx={{ padding: 0 }} elevation={9}>
       {cardheading ? (
         <CardContent>
-          <Typography variant="h5">{headtitle}</Typography>
-          <Typography variant="subtitle2" color="textSecondary">
-            {headsubtitle}
-          </Typography>
+          {headtitle && <Typography variant="h5">{headtitle}</Typography>}
+          {headsubtitle && (
+            <Typography variant="subtitle2" color="textSecondary">
+              {headsubtitle}
+            </Typography>
+          )}
         </CardContent>
       ) : (
         <CardContent sx={{ p: "30px" }}>
-          {title ? (
+          {title && (
             <Stack
               direction="row"
               spacing={2}
               justifyContent="space-between"
-              alignItems={"center"}
+              alignItems="center"
               mb={3}
             >
               <Box>
-                {title ? <Typography variant="h5">{title}</Typography> : ""}
-
-                {subtitle ? (
+                <Typography variant="h5">{title}</Typography>
+                {subtitle && (
                   <Typography variant="subtitle2" color="textSecondary">
                     {subtitle}
                   </Typography>
-                ) : (
-                  ""
                 )}
               </Box>
               {action}
             </Stack>
-          ) : null}
-
+          )}
           {children}
         </CardContent>
       )}

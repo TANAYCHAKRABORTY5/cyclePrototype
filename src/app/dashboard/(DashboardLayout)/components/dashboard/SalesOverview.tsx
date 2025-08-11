@@ -1,15 +1,17 @@
 import React from "react";
-import { Select, MenuItem } from "@mui/material";
+import { Select, MenuItem, SelectChangeEvent } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import DashboardCard from "../shared/DashboardCard";
 import dynamic from "next/dynamic";
+import { ApexOptions } from "apexcharts";
+
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-const SalesOverview = () => {
+const SalesOverview: React.FC = () => {
   // select
-  const [month, setMonth] = React.useState("1");
+  const [month, setMonth] = React.useState<string>("1");
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: SelectChangeEvent<string>) => {
     setMonth(event.target.value);
   };
 
@@ -18,11 +20,11 @@ const SalesOverview = () => {
   const primary = theme.palette.primary.main;
   const secondary = theme.palette.secondary.main;
 
-  // chart
-  const optionscolumnchart: any = {
+  // chart options
+  const optionscolumnchart: ApexOptions = {
     chart: {
       type: "bar",
-      fontFamily: "'Plus Jakarta Sans', sans-serif;",
+      fontFamily: "'Plus Jakarta Sans', sans-serif",
       foreColor: "#adb0bb",
       toolbar: {
         show: true,
@@ -35,12 +37,11 @@ const SalesOverview = () => {
         horizontal: false,
         barHeight: "60%",
         columnWidth: "42%",
-        borderRadius: [6],
+        borderRadius: 6,
         borderRadiusApplication: "end",
         borderRadiusWhenStacked: "all",
       },
     },
-
     stroke: {
       show: true,
       width: 5,
@@ -85,9 +86,10 @@ const SalesOverview = () => {
       fillSeriesColor: false,
     },
   };
-  const seriescolumnchart: any = [
+
+  const seriescolumnchart: ApexAxisChartSeries = [
     {
-      name: "Eanings this month",
+      name: "Earnings this month",
       data: [355, 390, 300, 350, 390, 180, 355, 390],
     },
     {
@@ -107,9 +109,9 @@ const SalesOverview = () => {
           size="small"
           onChange={handleChange}
         >
-          <MenuItem value={1}>March 2025</MenuItem>
-          <MenuItem value={2}>April 2025</MenuItem>
-          <MenuItem value={3}>May 2025</MenuItem>
+          <MenuItem value="1">March 2025</MenuItem>
+          <MenuItem value="2">April 2025</MenuItem>
+          <MenuItem value="3">May 2025</MenuItem>
         </Select>
       }
     >
@@ -118,7 +120,7 @@ const SalesOverview = () => {
         series={seriescolumnchart}
         type="bar"
         height={370}
-        width={"100%"}
+        width="100%"
       />
     </DashboardCard>
   );
