@@ -2,7 +2,6 @@
 import { styled, Container, Box } from "@mui/material";
 import React from "react";
 import Header from "./layout/header/Header";
-import Sidebar from "./layout/sidebar/Sidebar";
 
 const MainWrapper = styled("div")(() => ({
   display: "flex",
@@ -36,13 +35,7 @@ export default function RootLayout({ children }: Props) {
           height: "100vh",
           zIndex: 1200,
         }}
-      >
-        <Sidebar
-          isSidebarOpen={true} // always open
-          isMobileSidebarOpen={false}
-          onSidebarClose={() => {}}
-        />
-      </Box>
+      ></Box>
 
       {/* Main Content */}
       <PageWrapper className="page-wrapper">
